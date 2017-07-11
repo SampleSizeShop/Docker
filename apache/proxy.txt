@@ -1,0 +1,17 @@
+    RewriteEngine on
+    ProxyRequests Off
+
+    #
+    # proxy redirect to power service load balancer
+    #RewriteRule /power/(.*)$ http://tomcat:8080/power/$1 [P]
+#    ProxyPass /power/ http://tomcat:8080/power/
+#    ProxyPassReverse /power/ http://tomcat:8080/power/
+    #
+    # proxy redirect to file service load balancer
+    RewriteRule /file(.*)$ http://tomcat:8080/file$1 [P]
+    ProxyPassReverse / http://tomcat:8080/
+
+
+    ProxyPass /power/ http://tomcat:8080/power/
+    ProxyPassReverse /power/ http://tomcat:8080/power/
+

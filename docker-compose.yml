@@ -1,0 +1,24 @@
+tomcat:
+  build: tomcat
+#  command: /usr/share/tomcat8/bin/catalina.sh run
+#  command: bash
+  command: /host/docker-startup.sh
+  ports:
+    - "8080:8080"
+  volumes:
+    - ./logs:/var/log/tomcat8
+    - ../PowerSvc/target/libs:/usr/share/tomcat8-power
+    - ./tomcat:/host
+
+apache:
+  build: apache
+  command: /sbin/my_init -- /usr/sbin/apachectl -k start -DFOREGROUND
+  volumes:
+    - ./logs:/var/log/apache2
+    - ../GlimmpseWWW/app:/var/www/html
+  links:
+    - tomcat:tomcat
+  ports:
+    - "443:443"
+    - "80:80"
+
